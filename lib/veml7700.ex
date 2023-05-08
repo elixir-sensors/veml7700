@@ -1,12 +1,11 @@
 defmodule VEML7700 do
-  @moduledoc """
-  Use Vishay VEML7700 ambient light sensors in Elixir
-  """
+  @moduledoc File.read!("README.md")
+             |> String.split("<!-- MODULEDOC -->")
+             |> Enum.fetch!(1)
 
   use GenServer
   alias VEML7700.Comm
   alias VEML7700.Measurement
-  alias VEML7700.Transport
   require Logger
 
   @typedoc """
@@ -21,7 +20,7 @@ defmodule VEML7700 do
   @type option() ::
           {:name, atom}
           | {:bus_name, String.t()}
-          | {:bus_address, Transport.address()}
+          | {:bus_address, 0x10 | 0x48}
           | {:retries, pos_integer}
           | {:als_gain, als_gain}
           | {:als_integration_time, als_integration_time}
@@ -65,12 +64,20 @@ defmodule VEML7700 do
     GenServer.call(server, :measure)
   end
 
-  @spec get_als_config(GenServer.server()) :: {:error, any} | {:ok, map}
+  @doc """
+  Get the ambient light settings.
+  """
+  @spec get_als_config(GenServer.server()) ::
+          {:error, any} | {:ok, {setting_names :: [atom], resolution :: float}}
   def get_als_config(server \\ __MODULE__) do
     GenServer.call(server, :get_als_config)
   end
 
-  @spec set_als_config(GenServer.server(), als_gain | als_integration_time) :: {:error, any} | :ok
+  @doc """
+  Set the ambient light settings.
+  """
+  @spec set_als_config(GenServer.server(), als_gain | als_integration_time) ::
+          {:error, any} | {:ok, {setting_names :: [atom], resolution :: float}}
   def set_als_config(server \\ __MODULE__, als_setting_names) do
     GenServer.call(server, {:set_als_config, als_setting_names})
   end

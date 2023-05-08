@@ -1,6 +1,6 @@
 defmodule VEML7700.Transport do
   @moduledoc false
-  # just a thin wrapper around the Circuits.I2C module for our convenience
+  # Just a thin wrapper around the Circuits.I2C module for our convenience
 
   defstruct [:bus, :address, :options]
 

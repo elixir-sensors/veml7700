@@ -15,7 +15,8 @@ defmodule VEML7700.Comm do
   ## register 00
 
   # Configure ALS setting with one or more setting name atoms
-  @spec write_als_config(Transport.t(), atom | [atom]) :: {:ok, {[atom], number}} | {:error, any}
+  @spec write_als_config(Transport.t(), atom | [atom]) ::
+          {:error, any} | {:ok, {setting_names :: [atom], resolution :: float}}
   def write_als_config(transport, als_setting_names) do
     case read_register(transport, :als_config) do
       {:ok, current_value} ->
@@ -34,7 +35,8 @@ defmodule VEML7700.Comm do
   end
 
   # Get current ALS settings as setting name atoms and resolution
-  @spec read_als_config(Transport.t()) :: {:error, any} | {:ok, {[atom()], float()}}
+  @spec read_als_config(Transport.t()) ::
+          {:error, any} | {:ok, {setting_names :: [atom], resolution :: float}}
   def read_als_config(transport) do
     case read_register(transport, :als_config) do
       {:ok, uint16} ->

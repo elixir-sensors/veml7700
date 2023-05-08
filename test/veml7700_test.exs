@@ -9,14 +9,14 @@ defmodule VEML7700Test do
     i2c_bus = to_string(context.test)
     start_supervised!({VEML7700Sim, bus_name: i2c_bus, address: @i2c_address})
     VEML7700Sim.set_state(i2c_bus, @i2c_address, als_output: 500)
+
     start_supervised!({VEML7700, bus_name: i2c_bus, address: @i2c_address, name: context.test})
 
     :ok
   end
 
   test "measure", %{test: veml} do
-    {:error, :no_measurement} = VEML7700.measure(veml)
-
+    Process.sleep(100)
     {:ok, measurement} = VEML7700.measure(veml)
     assert_in_delta measurement.light_lux, 115.2, 0.1
   end

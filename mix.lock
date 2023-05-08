@@ -4,7 +4,6 @@
   "circuits_gpio": {:git, "https://github.com/elixir-circuits/circuits_gpio.git", "85700e3382ec6bf328f96b1d48fb17d316ad1576", [branch: "configurable-backend"]},
   "circuits_i2c": {:git, "https://github.com/elixir-circuits/circuits_i2c.git", "cb510ef6d91700d422caec4c9705628b55e72ea0", [branch: "configurable-backend"]},
   "circuits_sim": {:git, "https://github.com/elixir-circuits/circuits_sim.git", "df3774ee595432e0dfe2546f8de874c07101e2fe", []},
-  "circuits_sims": {:git, "https://github.com/mnishiguchi/circuits_sim.git", "f67c8f75318113fa428480517e3f6341b1392a17", [branch: "main"]},
   "circuits_spi": {:git, "https://github.com/elixir-circuits/circuits_spi.git", "e218fae2cf9a319f042a1d3bef6a8ee2445465a9", [branch: "configurable-backend"]},
   "credo": {:hex, :credo, "1.7.0", "6119bee47272e85995598ee04f2ebbed3e947678dee048d10b5feca139435f75", [:mix], [{:bunt, "~> 0.2.1", [hex: :bunt, repo: "hexpm", optional: false]}, {:file_system, "~> 0.2.8", [hex: :file_system, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm", "6839fcf63d1f0d1c0f450abc8564a57c43d644077ab96f2934563e68b8a769d7"},
   "dialyxir": {:hex, :dialyxir, "1.3.0", "fd1672f0922b7648ff9ce7b1b26fcf0ef56dda964a459892ad15f6b4410b5284", [:mix], [{:erlex, ">= 0.2.6", [hex: :erlex, repo: "hexpm", optional: false]}], "hexpm", "00b2a4bcd6aa8db9dcb0b38c1225b7277dca9bc370b6438715667071a304696f"},

@@ -1,7 +1,6 @@
 defmodule VEML7700.Register.Configuration do
-  @moduledoc """
-  The configuration register (0x00).
-  """
+  @moduledoc false
+  # The configuration register (0x00)
 
   alias VEML7700.Calc
 

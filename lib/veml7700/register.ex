@@ -1,17 +1,14 @@
 defmodule VEML7700.Register do
   @moduledoc false
 
-  # command registers
-  @cmd_register %{
-    als_config: 0,
-    als_threshold_high: 1,
-    als_threshold_low: 2,
-    als_power_saving: 3,
-    als_output: 4,
-    white_output: 5,
-    interrupt_status: 6
-  }
-
-  @spec command_register(atom) :: 0..6
-  def command_register(name), do: Map.fetch!(@cmd_register, name)
+  @doc """
+  Returns a register address for a command.
+  """
+  def command_register(:als_config), do: 0
+  def command_register(:als_threshold_high), do: 1
+  def command_register(:als_threshold_low), do: 2
+  def command_register(:als_power_saving), do: 3
+  def command_register(:als_output), do: 4
+  def command_register(:white_output), do: 5
+  def command_register(:interrupt_status), do: 6
 end

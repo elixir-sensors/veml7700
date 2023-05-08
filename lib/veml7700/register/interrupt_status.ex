@@ -1,7 +1,6 @@
 defmodule VEML7700.Register.InterruptStatus do
-  @moduledoc """
-  The interrupt status register (0x06).
-  """
+  @moduledoc false
+  # The interrupt status register (0x06)
 
   import Bitwise
 
