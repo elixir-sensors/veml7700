@@ -10,13 +10,13 @@ defmodule CircuitsSim.Device.VEML7700 do
   alias CircuitsSim.I2C.I2CDevice
   alias CircuitsSim.I2C.I2CServer
 
-  defstruct als_config: 0,
-            als_threshold_high: 0,
-            als_threshold_low: 0,
-            als_power_saving: 0,
-            als_output: 0,
-            white_output: 0,
-            interrupt_status: 0
+  defstruct als_config: 0b00000000_00000000,
+            als_threshold_high: 0b00000000_00000000,
+            als_threshold_low: 0b00000000_00000000,
+            als_power_saving: 0b00000000_00000000,
+            als_output: 0b00000000_00000000,
+            white_output: 0b00000000_00000000,
+            interrupt_status: 0b00000000_00000000
 
   @type t() :: %__MODULE__{
           als_config: 0..0xFFFF,
@@ -61,8 +61,20 @@ defmodule CircuitsSim.Device.VEML7700 do
     end
 
     @impl I2CDevice
-    def write(state, <<@cmd_als_config, als_config::little-16>>) do
-      %{state | als_config: als_config}
+    def write(state, <<@cmd_als_config, value::little-16>>) do
+      %{state | als_config: value}
+    end
+
+    def write(state, <<@cmd_als_threshold_high, data::little-16>>) do
+      %{state | als_threshold_high: data}
+    end
+
+    def write(state, <<@cmd_als_threshold_low, data::little-16>>) do
+      %{state | als_threshold_low: data}
+    end
+
+    def write(state, <<@cmd_als_power_saving, data::little-16>>) do
+      %{state | als_power_saving: data}
     end
 
     def write(state, _), do: state
@@ -73,8 +85,33 @@ defmodule CircuitsSim.Device.VEML7700 do
       {result, state}
     end
 
+    def write_read(state, <<@cmd_als_threshold_high>>, read_count) do
+      result = <<state.als_threshold_high>> |> trim_pad(read_count)
+      {result, state}
+    end
+
+    def write_read(state, <<@cmd_als_threshold_low>>, read_count) do
+      result = <<state.als_threshold_low::little-16>> |> trim_pad(read_count)
+      {result, state}
+    end
+
+    def write_read(state, <<@cmd_als_power_saving>>, read_count) do
+      result = <<state.als_power_saving::little-16>> |> trim_pad(read_count)
+      {result, state}
+    end
+
     def write_read(state, <<@cmd_als_output>>, read_count) do
       result = <<state.als_output::little-16>> |> trim_pad(read_count)
+      {result, state}
+    end
+
+    def write_read(state, <<@cmd_white_output>>, read_count) do
+      result = <<state.white_output::little-16>> |> trim_pad(read_count)
+      {result, state}
+    end
+
+    def write_read(state, <<@cmd_interrupt_status>>, read_count) do
+      result = <<state.interrupt_status::little-16>> |> trim_pad(read_count)
       {result, state}
     end
 
@@ -92,7 +129,7 @@ defmodule CircuitsSim.Device.VEML7700 do
     end
 
     @impl I2CDevice
-    @spec handle_message(CircuitsSim.Device.VEML7700.t(), {:set_state, any}) :: {:ok, struct}
+    @spec handle_message(struct, {:set_state, map | keyword}) :: {:ok, struct}
     def handle_message(state, {:set_state, kv}) do
       {:ok, struct!(state, kv)}
     end
