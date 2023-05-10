@@ -1,7 +1,7 @@
 defmodule VEML7700.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.1"
   @description "Use Vishay ambient light sensor VEML7700 in Elixir"
   @source_url "https://github.com/mnishiguchi/veml7700"
   @datasheet_url "https://www.vishay.com/docs/84286/veml7700.pdf"
