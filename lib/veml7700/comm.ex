@@ -26,11 +26,16 @@ defmodule VEML7700.Comm do
           |> Register.Configuration.set(als_setting_names)
           |> Register.Configuration.to_integer()
 
-        :ok = write_register(transport, :als_config, new_value)
-        read_als_config(transport)
+        case write_register(transport, :als_config, new_value) do
+          :ok ->
+            read_als_config(transport)
 
-      error ->
-        error
+          {:error, error} ->
+            {:error, error}
+        end
+
+      {:error, error} ->
+        {:error, error}
     end
   end
 
@@ -51,6 +56,67 @@ defmodule VEML7700.Comm do
     end
   end
 
+  ## register 01
+
+  @spec write_high_threshold(Transport.t(), 0..0xFFFF) :: {:error, any} | :ok
+  def write_high_threshold(transport, value) do
+    write_register(transport, :als_threshold_high, value)
+  end
+
+  @spec read_high_threshold(Transport.t()) :: {:error, any} | {:ok, 0..0xFFFF}
+  def read_high_threshold(transport) do
+    read_register(transport, :als_threshold_high)
+  end
+
+  ## register 02
+
+  @spec write_low_threshold(Transport.t(), 0..0xFFFF) :: {:error, any} | :ok
+  def write_low_threshold(transport, value) do
+    write_register(transport, :als_threshold_low, value)
+  end
+
+  @spec read_low_threshold(Transport.t()) :: {:error, any} | {:ok, 0..0xFFFF}
+  def read_low_threshold(transport) do
+    read_register(transport, :als_threshold_low)
+  end
+
+  ## register 03
+
+  @spec write_power_saving(Transport.t(), 0..3, boolean) :: {:error, any} | :ok
+  def write_power_saving(transport, mode, enable) do
+    case read_register(transport, :als_power_saving) do
+      {:ok, current_value} ->
+        new_value =
+          current_value
+          |> Register.PowerSaving.from_integer()
+          |> Register.PowerSaving.set_enabled(enable)
+          |> Register.PowerSaving.set_mode(mode)
+          |> Register.PowerSaving.to_integer()
+
+        write_register(transport, :als_power_saving, new_value)
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  @spec read_power_saving(Transport.t()) ::
+          {:error, any} | {:ok, {mode :: 0..3, enabled :: boolean}}
+  def read_power_saving(transport) do
+    case read_register(transport, :als_power_saving) do
+      {:ok, current_value} ->
+        {mode, enabled} =
+          current_value
+          |> Register.PowerSaving.from_integer()
+          |> Register.PowerSaving.to_tuple()
+
+        {:ok, {mode, enabled}}
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
   ## register 04
 
   @spec read_als_output(Transport.t(), number) :: {:error, any} | {:ok, Measurement.t()}
@@ -58,6 +124,20 @@ defmodule VEML7700.Comm do
     case read_register(transport, :als_output) do
       {:ok, new_value} ->
         {:ok, Measurement.new(new_value, resolution)}
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  ## register 06
+
+  @spec read_interrupt_status(Transport.t()) ::
+          {:error, any} | {:ok, [:high_threshold_crossed | :low_threshold_crossed]}
+  def read_interrupt_status(transport) do
+    case read_register(transport, :interrupt_status) do
+      {:ok, new_value} ->
+        {:ok, Register.InterruptStatus.from_integer(new_value)}
 
       {:error, error} ->
         {:error, error}

@@ -14,4 +14,15 @@ defmodule VEML7700.Register.InterruptStatusTest do
     assert(InterruptStatus.low_threshold?(0b11000000_00000000))
     refute(InterruptStatus.low_threshold?(0))
   end
+
+  test "convert integer to list" do
+    assert InterruptStatus.from_integer(0b11000000_00000000) == [
+             :high_threshold_crossed,
+             :low_threshold_crossed
+           ]
+
+    assert InterruptStatus.from_integer(0b01000000_00000000) == [:high_threshold_crossed]
+    assert InterruptStatus.from_integer(0b10000000_00000000) == [:low_threshold_crossed]
+    assert InterruptStatus.from_integer(0b00000000_00000000) == []
+  end
 end

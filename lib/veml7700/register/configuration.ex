@@ -56,7 +56,7 @@ defmodule VEML7700.Register.Configuration do
   @doc """
   Sets configuration values with one or more setting name atoms
   """
-  @spec set(map, atom | [atom]) :: map
+  @spec set(struct, atom | [atom]) :: struct
   def set(t, setting_name) when is_atom(setting_name) do
     set(t, [setting_name])
   end
@@ -74,15 +74,15 @@ defmodule VEML7700.Register.Configuration do
   @doc """
   Gets configuration values with one or more setting name atoms
   """
-  @spec to_list(map) :: [atom]
+  @spec to_list(struct) :: [atom]
   def to_list(t), do: get(t, @register_names)
 
-  @spec get(map, atom) :: atom
+  @spec get(struct, atom) :: atom
   def get(t, register_name) when is_atom(register_name) do
     get(t, [register_name]) |> List.first()
   end
 
-  @spec get(map, [atom]) :: [atom]
+  @spec get(struct, [atom]) :: [atom]
   def get(t, register_names) when is_list(register_names) do
     Enum.reduce(@possible_settings, [], fn {setting_name, register_name, value}, acc ->
       if register_name in register_names and value == Map.fetch!(t, register_name) do
@@ -120,7 +120,7 @@ defmodule VEML7700.Register.Configuration do
     uint16 >>> position &&& mask
   end
 
-  @spec resolution(map) :: float
+  @spec resolution(struct) :: float
   def resolution(t) do
     als_gain = get(t, :als_gain)
     als_integration_time = get(t, :als_integration_time)

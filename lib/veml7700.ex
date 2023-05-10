@@ -65,7 +65,7 @@ defmodule VEML7700 do
   end
 
   @doc """
-  Get the ambient light settings.
+  Get the ambient light sensor settings.
   """
   @spec get_als_config(GenServer.server()) ::
           {:error, any} | {:ok, {setting_names :: [atom], resolution :: float}}
@@ -74,12 +74,70 @@ defmodule VEML7700 do
   end
 
   @doc """
-  Set the ambient light settings.
+  Set the ambient light sensor settings.
   """
   @spec set_als_config(GenServer.server(), als_gain | als_integration_time) ::
           {:error, any} | {:ok, {setting_names :: [atom], resolution :: float}}
   def set_als_config(server \\ __MODULE__, als_setting_names) do
     GenServer.call(server, {:set_als_config, als_setting_names})
+  end
+
+  @doc """
+  Get the low threshold.
+  """
+  @spec get_low_threshold(GenServer.server()) :: {:error, any} | {:ok, 0..0xFFFF}
+  def get_low_threshold(server \\ __MODULE__) do
+    GenServer.call(server, :get_low_threshold)
+  end
+
+  @doc """
+  Set the low threshold.
+  """
+  @spec set_low_threshold(GenServer.server(), 0..0xFFFF) :: {:error, any} | :ok
+  def set_low_threshold(server \\ __MODULE__, value) do
+    GenServer.call(server, {:set_low_threshold, value})
+  end
+
+  @doc """
+  Get the high threshold.
+  """
+  @spec get_high_threshold(GenServer.server()) :: {:error, any} | {:ok, 0..0xFFFF}
+  def get_high_threshold(server \\ __MODULE__) do
+    GenServer.call(server, :get_high_threshold)
+  end
+
+  @doc """
+  Set the high threshold.
+  """
+  @spec set_high_threshold(GenServer.server(), 0..0xFFFF) :: {:error, any} | :ok
+  def set_high_threshold(server \\ __MODULE__, value) do
+    GenServer.call(server, {:set_high_threshold, value})
+  end
+
+  @doc """
+  Get the power saving mode.
+  """
+  @spec get_power_saving(GenServer.server()) ::
+          {:error, any} | {:ok, {mode :: 0..3, enabled :: boolean}}
+  def get_power_saving(server \\ __MODULE__) do
+    GenServer.call(server, :get_power_saving)
+  end
+
+  @doc """
+  Set the power saving mode.
+  """
+  @spec set_power_saving(GenServer.server(), mode :: 0..3, enabled :: boolean) ::
+          {:error, any} | :ok
+  def set_power_saving(server \\ __MODULE__, mode, enabled) do
+    GenServer.call(server, {:set_power_saving, mode, enabled})
+  end
+
+  @doc """
+  Get the interrupt status.
+  """
+  @spec get_interrupt_status(GenServer.server()) :: {:error, any} | {:ok, 0..0xFFFF}
+  def get_interrupt_status(server \\ __MODULE__) do
+    GenServer.call(server, :get_interrupt_status)
   end
 
   ## GenServer callbacks
@@ -163,6 +221,48 @@ defmodule VEML7700 do
       {:error, error} ->
         {:stop, error}
     end
+  end
+
+  def handle_call(:get_low_threshold, _from, state) do
+    result = Comm.read_low_threshold(state.transport)
+
+    {:reply, result, state}
+  end
+
+  def handle_call({:set_low_threshold, value}, _from, state) do
+    result = Comm.write_low_threshold(state.transport, value)
+
+    {:reply, result, state}
+  end
+
+  def handle_call(:get_high_threshold, _from, state) do
+    result = Comm.read_high_threshold(state.transport)
+
+    {:reply, result, state}
+  end
+
+  def handle_call({:set_high_threshold, value}, _from, state) do
+    result = Comm.write_high_threshold(state.transport, value)
+
+    {:reply, result, state}
+  end
+
+  def handle_call(:get_power_saving, _from, state) do
+    result = Comm.read_power_saving(state.transport)
+
+    {:reply, result, state}
+  end
+
+  def handle_call({:set_power_saving, mode, enable}, _from, state) do
+    result = Comm.write_power_saving(state.transport, mode, enable)
+
+    {:reply, result, state}
+  end
+
+  def handle_call(:get_interrupt_status, _from, state) do
+    result = Comm.read_interrupt_status(state.transport)
+
+    {:reply, result, state}
   end
 
   @impl GenServer
