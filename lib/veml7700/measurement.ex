@@ -16,7 +16,7 @@ defmodule VEML7700.Measurement do
   def new(raw_light, resolution) when is_number(raw_light) and is_number(resolution) do
     %__MODULE__{
       light_lux: Calc.raw_to_lux(raw_light, resolution),
-      timestamp_ms: System.monotonic_time()
+      timestamp_ms: System.monotonic_time(:millisecond)
     }
   end
 end
