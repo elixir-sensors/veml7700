@@ -12,7 +12,7 @@ defmodule VEML7700.MixProject do
       version: @version,
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      deps: deps(Mix.env()),
+      deps: deps(),
       start_permanent: Mix.env() == :prod,
       description: @description,
       dialyzer: [
@@ -37,18 +37,13 @@ defmodule VEML7700.MixProject do
   end
 
   # Run "mix help deps" to learn about dependencies.
-  defp deps(env) when env in [:test, :dev] do
+  defp deps do
     [
-      {:circuits_i2c, github: "elixir-circuits/circuits_i2c", override: true},
+      # {:circuits_i2c, "~> 2.0 or ~> 1.0 or ~> 0.3"},
+      {:circuits_i2c, github: "elixir-circuits/circuits_i2c", branch: "v2.0", override: true},
       {:circuits_sim, github: "elixir-circuits/circuits_sim"},
-      {:credo, "~> 1.7", runtime: false},
-      {:dialyxir, "~> 1.3", runtime: false}
-    ]
-  end
-
-  defp deps(_env) do
-    [
-      {:circuits_i2c, "~> 2.0 or ~> 1.0 or ~> 0.3"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.29", only: :docs, runtime: false}
     ]
   end

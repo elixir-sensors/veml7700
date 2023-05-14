@@ -17,6 +17,8 @@ Use [Vishay ambient light sensor VEML7700](https://www.vishay.com/docs/84286/vem
 
 Here's an example use. VEML7700 sensors are at address `0x10`; VEML6030 typically at `0x48`.
 
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fgithub.com%2Fmnishiguchi%2Fveml7700%2Fblob%2Fmain%2Fnotebooks%2Fbasic_usage.livemd)
+
 ```elixir
 iex> {:ok, veml} = VEML7700.start_link(bus_name: "i2c-1", bus_address: 0x10)
 {:ok, #PID<0.2190.0>}
