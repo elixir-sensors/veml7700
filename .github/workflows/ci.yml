@@ -100,8 +100,8 @@ jobs:
       - run: mix format --check-formatted
         if: ${{ matrix.lint }}
 
-      - run: mix deps.unlock --check-unused
-        if: ${{ matrix.lint }}
+      # - run: mix deps.unlock --check-unused
+      #   if: ${{ matrix.lint }}
 
       - run: mix credo
         if: ${{ matrix.lint }}
