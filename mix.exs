@@ -1,7 +1,7 @@
 defmodule VEML7700.MixProject do
   use Mix.Project
 
-  @version "0.1.2"
+  @version "0.1.3"
   @description "Use Vishay ambient light sensor VEML7700 in Elixir"
   @source_url "https://github.com/elixir-sensors/veml7700"
   @datasheet_url "https://www.vishay.com/docs/84286/veml7700.pdf"
@@ -39,9 +39,8 @@ defmodule VEML7700.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:circuits_i2c, "~> 2.0 or ~> 1.0 or ~> 0.3"},
-      {:circuits_i2c, github: "elixir-circuits/circuits_i2c", branch: "v2.0", override: true},
-      {:circuits_sim, github: "elixir-circuits/circuits_sim"},
+      {:circuits_i2c, "~> 2.0 or ~> 1.0 or ~> 0.3"},
+      {:circuits_sim, github: "elixir-circuits/circuits_sim", only: [:dev, :test]},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.29", only: :docs, runtime: false}

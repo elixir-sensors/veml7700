@@ -12,7 +12,7 @@ permissions:
 jobs:
   deps:
     name: Dependencies
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       MIX_ENV: test
     strategy:
@@ -22,8 +22,8 @@ jobs:
               elixir: 1.12.3
               otp: 24.3.4
           - pair:
-              elixir: 1.14.3
-              otp: 25.3.2
+              elixir: 1.16.0
+              otp: 26.2.1
             lint: lint
     steps:
       - uses: styfle/cancel-workflow-action@0.11.0
@@ -61,7 +61,7 @@ jobs:
   static_code_analysis:
     name: Static Code Analysis
     needs: deps
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       MIX_ENV: test
     strategy:
@@ -71,8 +71,8 @@ jobs:
               elixir: 1.12.3
               otp: 24.3.4
           - pair:
-              elixir: 1.14.3
-              otp: 25.3.2
+              elixir: 1.16.0
+              otp: 26.2.1
             lint: lint
     steps:
       - uses: styfle/cancel-workflow-action@0.11.0
@@ -100,8 +100,8 @@ jobs:
       - run: mix format --check-formatted
         if: ${{ matrix.lint }}
 
-      # - run: mix deps.unlock --check-unused
-      #   if: ${{ matrix.lint }}
+      - run: mix deps.unlock --check-unused
+        if: ${{ matrix.lint }}
 
       - run: mix credo
         if: ${{ matrix.lint }}
@@ -111,7 +111,7 @@ jobs:
 
   unit_tests:
     needs: deps
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       MIX_ENV: test
     strategy:
@@ -122,8 +122,8 @@ jobs:
               elixir: 1.12.3
               otp: 24.3.4
           - pair:
-              elixir: 1.14.3
-              otp: 25.3.2
+              elixir: 1.16.0
+              otp: 26.2.1
             lint: lint
     steps:
       - uses: styfle/cancel-workflow-action@0.11.0
