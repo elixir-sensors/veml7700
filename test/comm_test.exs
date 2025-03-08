@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 Masatoshi Nishiguchi
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule VEML7700.CommTest do
   use ExUnit.Case
   alias VEML7700.Comm

@@ -1,7 +1,9 @@
 # VEML7700
 
-[![Hex version](https://img.shields.io/hexpm/v/veml7700.svg 'Hex version')](https://hex.pm/packages/veml7700)
-[![CI](https://github.com/elixir-sensors/veml7700/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/elixir-sensors/veml7700/actions/workflows/ci.yml)
+[![Hex version](https://img.shields.io/hexpm/v/veml7700.svg "Hex version")](https://hex.pm/packages/veml7700)
+[![API docs](https://img.shields.io/hexpm/v/veml7700.svg?label=docs "API docs")](https://hexdocs.pm/veml7700)
+[![CI](https://github.com/elixir-sensors/veml7700/actions/workflows/ci.yml/badge.svg)](https://github.com/elixir-sensors/veml7700/actions/workflows/ci.yml)
+[![REUSE status](https://api.reuse.software/badge/github.com/elixir-sensors/veml7700)](https://api.reuse.software/info/github.com/elixir-sensors/veml7700)
 
 <!-- MODULEDOC -->
 
