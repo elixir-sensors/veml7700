@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 Masatoshi Nishiguchi
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 import Config
 
 # https://github.com/elixir-circuits/circuits_sim

@@ -4,6 +4,7 @@ defmodule VEML7700.MixProject do
   @version "0.1.3"
   @description "Use Vishay ambient light sensor VEML7700 in Elixir"
   @source_url "https://github.com/elixir-sensors/veml7700"
+  @reuse_compliance_url "https://api.reuse.software/info/github.com/elixir-sensors/veml7700"
   @datasheet_url "https://www.vishay.com/docs/84286/veml7700.pdf"
 
   def project do
@@ -57,12 +58,15 @@ defmodule VEML7700.MixProject do
         "test",
         "mix.exs",
         "README*",
-        "LICENSE*",
-        "CHANGELOG*"
+        "CHANGELOG*",
+        "LICENSES",
+        "NOTICE",
+        "REUSE.toml"
       ],
       licenses: ["Apache-2.0"],
       links: %{
         "GitHub" => @source_url,
+        "REUSE compliance" => @reuse_compliance_url,
         "Data sheet" => @datasheet_url
       }
     }

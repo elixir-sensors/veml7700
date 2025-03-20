@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 Masatoshi Nishiguchi
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule VEML7700.Transport do
   @moduledoc false
   # Just a thin wrapper around the Circuits.I2C module for our convenience
