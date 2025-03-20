@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.4 (2025-03-20)
+
+### Changed
+
+- Reuse compliance
+
 ## v0.1.3 (2024-01-17)
 
 ### Changed
